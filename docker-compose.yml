@@ -1,0 +1,43 @@
+## By: GirishN
+
+# A docker-compose file for the ehcp-docker
+
+version: '3'
+services:
+  ehcp:
+    build:
+      context: ./
+      args:
+        - ADMIN_EMAIL=${ADMIN_EMAIL}
+        - IP_ADDRESS=${IP_ADDRESS}
+    image: ehcp
+    env_file: .env
+    volumes:
+      - var_www_new:/var/www/new
+      - var_lib_mysql:/var/lib/mysql
+      - var_log:/var/log
+      - home_vmail:/home/vmail
+      - etc:/etc
+      - var_spool:/var/spool
+    network_mode: "bridge"
+    ports:
+      - "$IP_ADDRESS:21:21"
+      - "$IP_ADDRESS:53:53/udp"
+      - "$IP_ADDRESS:53:53"
+      - "$IP_ADDRESS:80:80"
+      - "$IP_ADDRESS:110:110"
+      - "$IP_ADDRESS:143:143"
+      - "$IP_ADDRESS:587:587"
+      - "$IP_ADDRESS:953:953"
+      - "$IP_ADDRESS:993:993"
+      - "$IP_ADDRESS:995:995"
+      - "$IP_ADDRESS:3306:3306"
+      - "$IP_ADDRESS:9000:9000"
+
+volumes:
+  var_www_new:
+  var_lib_mysql:
+  var_log:
+  home_vmail:
+  etc:
+  var_spool:
